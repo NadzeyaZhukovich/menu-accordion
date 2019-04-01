@@ -1,10 +1,10 @@
-function Conteiner(id, className, tegName) {
+function Container(id, className, tegName) {
    this.id = id;
    this.className = className;
    this.tegName = tegName;
    this.element = null;
    
-   Conteiner.prototype.render = function() {
+   Container.prototype.render = function() {
        if(!this.element) {
            const element = document.createElement(this.tegName);
            if(this.id) {
@@ -20,28 +20,27 @@ function Conteiner(id, className, tegName) {
 }
 
 function Menu(id, className, items) {
-    Conteiner.call(this, id, className, 'ul');
+    Container.call(this, id, className, 'ul');
    
     this.items = items;
 }
 
-Menu.prototype = Object.create(Conteiner.prototype);
+Menu.prototype = Object.create(Container.prototype);
 Menu.prototype.render = function() {
-    Conteiner.prototype.render.call(this);
-    // this.items.forEach(function(item) {
+    Container.prototype.render.call(this);
     for (let i = 0; i < this.items.length; i++) {    
         if(this.items[i] instanceof MenuItem) {
             this.element.appendChild(this.items[i].render());
         } else {
             throw new Error('Unextended menu item');
         }
-    }//);
+    }
     return this.element;
 
 }
 
 function MenuItem(href, title) {
-    Conteiner.call(this, null, 'nemu-item', 'li');
+    Container.call(this, null, 'menu-item', 'li');
 
     this.href = href;
     this.title = title;
@@ -49,7 +48,7 @@ function MenuItem(href, title) {
 
 MenuItem.prototype = Object.create(Menu.prototype);
 MenuItem.prototype.render = function() {
-    Conteiner.prototype.render.call(this);
+    Container.prototype.render.call(this);
     const link = document.createElement('a');
     link.href = this.href;
     link.innerText = this.title;
