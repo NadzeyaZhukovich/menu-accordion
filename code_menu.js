@@ -58,28 +58,35 @@ MenuItem.prototype.render = function() {
 }
 
 function ExtMenuItem(href, title, menuItems) {
-    Conteiner.call(this, null, 'menu-item', 'li');
-
-    this.href = href;
-    this.title = title;
-    this.menuItems = menuItems;
+    if(menuItems){
+        Menu.call(this, null, null, menuItems);
+    }
+    MenuItem.call(this, href, title);
 }
 
 ExtMenuItem.prototype = Object.create(MenuItem.prototype);
 ExtMenuItem.prototype.render = function() {
     MenuItem.prototype.render.call(this);
-    let menu = new Menu('sub-menu', 'sub-menu', this.menuItems).render();
-    this.element.appendChild(menu);
+    if(this.items){
+        const menu = new Menu('sub-menu', 'sub-menu', this.items).render();
+        this.element.appendChild(menu);
+    }
     return this.element;
+
 }
 
-const item1 = new MenuItem('/', 'Home');
-const item2 = new MenuItem('/phone','Phone');
-const item3 = new MenuItem('/email', 'Email');
-const item4 = new ExtMenuItem('/test', 'test', [
-    new MenuItem('/sub-test','sub-test'),
-    new MenuItem('/sub-test','sub-test2')
+const item1 = new ExtMenuItem('/', 'Home');
+const item2 = new ExtMenuItem('/phone','Phone');
+const item3 = new ExtMenuItem('/email', 'Email');
+const item4 = new ExtMenuItem('/menu', 'Additional Menu', [
+    new MenuItem('/sub-menu','Sub-menu-1'),
+    new MenuItem('/sub-menu','Sub-menu-2'),
+    new ExtMenuItem('/internal-menu', 'Menu', [
+        new MenuItem('/sub-internal-menu', 'Sub-internal-menu-1'),
+        new MenuItem('/sub-internal-menu', 'Sub-internal-menu-2')
+    ])
 ]);
 
+
 const menu = new Menu('menu', 'menu', [item1, item2, item3, item4]);
-document.body.appendChild(menu.render());
+document.getElementById('menu-1').appendChild(menu.render());

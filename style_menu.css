@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+}
+
+.title{
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: rgb(218, 220, 222);
+    padding: 10px;
+}
+
+.main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0 auto;
+    width: 1000px;
+
+}
+
+.menuContainer{
+    padding-top: 40px;
+}
+
+.question{
+
+}
